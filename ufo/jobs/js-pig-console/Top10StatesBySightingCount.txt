@@ -1,0 +1,1 @@
+pig.from("/ufo/input").mapReduce("/ufo/jobs/UFOSightingsByState.js", "state, count: int").orderBy("count DESC").take(10).to("/ufo/output-pig")
