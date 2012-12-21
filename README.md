@@ -7,7 +7,7 @@ Languages and frameworks used:
   * Java
   * C#/.NET
   * JavaScript
-  * Hive (HQL)
+  * Hive
   * Pig
 
 Input file formats: 
@@ -40,11 +40,12 @@ A MapReduce application that counts the number of log entries for each HTTP stat
 ####How to run (.NET version):
   1. Build the project, check if `HadoopIISStatusCodeCount.dll` and `MRLib` folder exist in the build output folder.
   2. Make sure that the build output path does not contain spaces.
-  3. Navigate to `MRLib` folder and execute the MapReduce job via `MRRunner`:
+  3. Upload the dataset to HDFS (see Java version above).
+  4. Navigate to `MRLib` folder and execute the MapReduce job via `MRRunner`:
 
     `MRRunner.exe -dll ..\HadoopIISStatusCodeCount.dll -- /iis/input /iis/output-dotnet`
 
-  4. To browse the results, run:
+  5. To browse the results, run:
 
     `hadoop fs -cat /iis/output-dotnet/part-00000`
 
@@ -77,11 +78,12 @@ A MapReduce script that counts the number of reported UFO sightings for each U.S
 A Pig job defined in HDInsight JavaScript syntax that determines the top 10 U.S. states by the number of UFO reports.
 
 ####How to run
-  1. Navigate to HDInsight Interactive JavaScript Console and run the following command:
+  1. Upload the dataset and JavaScript file from the SightingCountByState job (see above) if they don't exist yet.
+  2. Navigate to HDInsight Interactive JavaScript Console and run the following command:
 
     `pig.from("/ufo/input").mapReduce("/ufo/jobs/SightingCountByState.js", "state, count: int").orderBy("count DESC").take(10).to("/ufo/output-pig")`
 
-  2. Browse the results via JavaScript Console:
+  3. Browse the results via JavaScript Console:
 
     `#cat /ufo/output-pig/part-r-00000`
 
